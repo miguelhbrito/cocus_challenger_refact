@@ -45,9 +45,9 @@
 									"tests[\"Status code is 200\"] = responseCode.code === 200;",
 									"",
 									"var response = JSON.parse(responseBody);",
-									"tests[\"token should not be null\"] = response.token !== null;",
+									"tests[\"token should not be null\"] = response.access_token !== null;",
 									"",
-									"postman.setEnvironmentVariable(\"token\", response.token);"
+									"postman.setEnvironmentVariable(\"token\", response.access_token);"
 								],
 								"type": "text/javascript"
 							}

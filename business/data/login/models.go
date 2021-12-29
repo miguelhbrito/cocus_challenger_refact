@@ -28,7 +28,7 @@ type NewLogin struct {
 }
 
 type Token struct {
-	Token   string `json:"acess_token"`
+	Token   string `json:"access_token"`
 	ExpTime int64  `json:"expTime"`
 }
 

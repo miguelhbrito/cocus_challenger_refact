@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-go run cmd/main.go
+go run app/cocus/main.go
