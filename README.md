@@ -1,5 +1,5 @@
 # cocus_challenger
-![build](https://github.com/miguelhbrito/cocus_challenger/actions/workflows/go.yaml/badge.svg?branch=master)
+![build](https://github.com/miguelhbrito/cocus_challenger_refact/actions/workflows/go.yaml/badge.svg?branch=master)
 
 ## 🧰 Configuration
 
