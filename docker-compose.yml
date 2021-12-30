@@ -1,17 +1,17 @@
 version: '3'
 
 services:
-  postgres:
-    image: postgres:12-alpine
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_DB=asgard
-      - POSTGRES_USER=hel
-      - POSTGRES_PASSWORD=saymyname
-      - MAX_CONNECTIONS=300
-    networks:
-      - local-network
+  #postgres:
+  #  image: postgres:12-alpine
+  #  ports:
+  #    - "5432:5432"
+  #  environment:
+  #    - POSTGRES_DB=asgard
+  #    - POSTGRES_USER=hel
+  #    - POSTGRES_PASSWORD=saymyname
+  #    - MAX_CONNECTIONS=300
+  #  networks:
+  #    - local-network
 
   vault:
     image: vault:latest
