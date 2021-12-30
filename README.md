@@ -68,6 +68,8 @@ To clean binary
 ``` powershell
 make clean
 ```
+## 🚀 Endpoints
+
 ##### `/login/create` POST to create a new user
 ##### `/login` POST to get login token
 ##### `/triangles` POST to create a new triangle
