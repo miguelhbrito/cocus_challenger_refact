@@ -38,9 +38,10 @@ func (s *LoginSuite) TestLoginSuccess() {
 func (s *LoginSuite) TestLoginFail() {
 	e := httpexpect.New(s.T(), fmt.Sprintf("http://"+utilities.BaseURL))
 
-	e.POST("/login/create").WithJSON(nil).
+	e.POST("/login/create").
+		WithJSON(nil).
 		Expect().
-		Status(http.StatusBadRequest).JSON()
+		Status(http.StatusBadRequest)
 }
 
 func (s *LoginSuite) TestLoginTokenSuccess() {

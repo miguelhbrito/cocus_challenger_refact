@@ -238,7 +238,7 @@ func TestCore_List(t *testing.T) {
 					},
 				},
 			},
-			want:    triangle.Triangles{{Id: "1"}},
+			want:    triangle.Triangles{triangle.Triangle{Id: "1"}},
 			wantErr: false,
 		},
 		{

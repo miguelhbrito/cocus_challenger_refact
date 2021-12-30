@@ -1,14 +1,18 @@
 package middleware
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/cocus_challenger_refact/app/cocus/rate_limit"
 	"github.com/cocus_challenger_refact/app/cocus/terrors"
 	"github.com/cocus_challenger_refact/business/data/login"
 	"github.com/golang-jwt/jwt"
 )
+
+var limiter = rate_limit.NewIPRateLimiter(1, 5)
 
 type Middleware struct {
 	Log *log.Logger
@@ -23,6 +27,13 @@ func NewMiddleware(Log *log.Logger) Middleware {
 func (m Middleware) Authorization(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		m.Log.Printf("Authorization middleware")
+		limiter := limiter.GetLimiter(r.RemoteAddr)
+
+		if !limiter.Allow() {
+			terrors.Handler(w, http.StatusTooManyRequests,
+				errors.New("too many requests from the same Ip address"))
+			return
+		}
 
 		if r.URL.Path != "/login" && r.URL.Path != "/login/create" {
 			m.Log.Printf("Authorization middleware checking token auth")

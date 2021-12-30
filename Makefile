@@ -31,3 +31,5 @@ test-cover:
 integration-test:
 	go test -v -failfast ./business/integration_tests/login_integration_test.go
 	go test -v -failfast ./business/integration_tests/triangle_integration_test.go
+lint-run:
+	golangci-lint run
