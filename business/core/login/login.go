@@ -13,19 +13,19 @@ type LoginInt interface {
 	Login(l login.Login) (login.Token, error)
 }
 
-type Core struct {
+type core struct {
 	db   login.LoginInt
 	auth auth.Auth
 }
 
 func NewCore(db login.LoginInt, auth auth.Auth) LoginInt {
-	return Core{
+	return core{
 		db:   db,
 		auth: auth,
 	}
 }
 
-func (c Core) CreateUser(l login.Login) error {
+func (c core) CreateUser(l login.Login) error {
 
 	//Generation new hashedpassword to save into db
 	newPassword, err := c.auth.GenerateHashPassword(l.Password)
@@ -42,7 +42,7 @@ func (c Core) CreateUser(l login.Login) error {
 	return nil
 }
 
-func (c Core) Login(l login.Login) (login.Token, error) {
+func (c core) Login(l login.Login) (login.Token, error) {
 	//Getting credentials from database
 	lr, err := c.db.Login(l)
 	if err != nil {

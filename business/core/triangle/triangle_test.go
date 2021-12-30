@@ -198,7 +198,7 @@ func TestCore_Create(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := Core{
+			c := core{
 				db: tt.fields.db,
 			}
 			got, err := c.Create(tt.args.t)
@@ -255,7 +255,7 @@ func TestCore_List(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			c := Core{
+			c := core{
 				db: tt.fields.db,
 			}
 			got, err := c.List()

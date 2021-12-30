@@ -9,17 +9,17 @@ type TriangleInt interface {
 	List() (triangle.Triangles, error)
 }
 
-type Core struct {
+type core struct {
 	db triangle.TriangleInt
 }
 
 func NewCore(db triangle.TriangleInt) TriangleInt {
-	return Core{
+	return core{
 		db: db,
 	}
 }
 
-func (c Core) Create(t triangle.Triangle) (triangle.Triangle, error) {
+func (c core) Create(t triangle.Triangle) (triangle.Triangle, error) {
 
 	//Check if is a valid triangle
 	if !isTriangle(t) {
@@ -44,7 +44,7 @@ func (c Core) Create(t triangle.Triangle) (triangle.Triangle, error) {
 	return tr, nil
 }
 
-func (c Core) List() (triangle.Triangles, error) {
+func (c core) List() (triangle.Triangles, error) {
 
 	triangles, err := c.db.List()
 	if err != nil {
