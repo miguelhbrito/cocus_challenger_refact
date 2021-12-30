@@ -47,20 +47,23 @@ Run build application:
 ``` powershell
 make run-cocus-gateway-build
 ```
-To shutdown vault:
+After started the system, then you are able to run E2E tests:
 ``` powershell
-make config-down
+make integration-test
 ```
 To test and test with coverage:
 ``` powershell
 make test
 make test-cover
 ```
+To shutdown vault:
+``` powershell
+make config-down
+```
 To clean binary
 ``` powershell
 make clean
 ```
-
 ##### `/login/create` POST to create a new user
 ##### `/login` POST to get login token
 ##### `/triangles` POST to create a new triangle
