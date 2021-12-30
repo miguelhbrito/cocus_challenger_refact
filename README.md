@@ -56,6 +56,10 @@ To test and test with coverage:
 make test
 make test-cover
 ```
+To run lint:
+``` powershell
+make lint-run
+```
 To shutdown vault:
 ``` powershell
 make config-down
