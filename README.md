@@ -43,7 +43,7 @@ Run application:
 ``` powershell
 make run-cocus-gateway
 ```
-Run build application:
+Or run build application:
 ``` powershell
 make run-cocus-gateway-build
 ```
