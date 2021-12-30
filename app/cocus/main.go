@@ -65,6 +65,7 @@ func run() error {
 	dbconnection := db.InitDB(config.DBDriver, config.DBSource)
 
 	// Starting migrations
+	migrations.InitLocationMigrations("")
 	migrations.InitMigrations(dbconnection)
 	defer dbconnection.Close()
 
