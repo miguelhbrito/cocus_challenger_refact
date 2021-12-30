@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/cocus_challenger_refact/app/cocus/merrors"
 	"github.com/cocus_challenger_refact/app/cocus/mhttp"
-	"github.com/cocus_challenger_refact/app/cocus/terrors"
 	core "github.com/cocus_challenger_refact/business/core/triangle"
 	"github.com/cocus_challenger_refact/business/data/triangle"
 )
@@ -25,7 +25,7 @@ func (h *TriangleHandlers) Create(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		h.Log.Printf("Error to decode from json, err %s", err)
-		terrors.Handler(w, http.StatusInternalServerError,
+		merrors.Handler(w, http.StatusInternalServerError,
 			fmt.Errorf("Error to decode from json, err:%s", err.Error()))
 		return
 	}
@@ -33,7 +33,7 @@ func (h *TriangleHandlers) Create(w http.ResponseWriter, r *http.Request) {
 	err = req.Validate()
 	if err != nil {
 		h.Log.Printf("Error to validate sides from triangle, err %s", err)
-		terrors.Handler(w, http.StatusBadRequest, err)
+		merrors.Handler(w, http.StatusBadRequest, err)
 		return
 	}
 
@@ -41,12 +41,12 @@ func (h *TriangleHandlers) Create(w http.ResponseWriter, r *http.Request) {
 	triangleResult, err := h.TriangleManager.Create(triangle)
 	if err != nil {
 		h.Log.Printf("Error to create new triangle, err %s", err)
-		terrors.Handler(w, http.StatusInternalServerError, err)
+		merrors.Handler(w, http.StatusInternalServerError, err)
 		return
 	}
 
 	if err := mhttp.WriteJsonResponse(w, triangleResult.Response(), http.StatusCreated); err != nil {
-		terrors.Handler(w, http.StatusInternalServerError, err)
+		merrors.Handler(w, http.StatusInternalServerError, err)
 		return
 	}
 }
@@ -58,12 +58,12 @@ func (h *TriangleHandlers) List(w http.ResponseWriter, r *http.Request) {
 	ts, err := h.TriangleManager.List()
 	if err != nil {
 		h.Log.Printf("Error to list all triangles, err %s", err)
-		terrors.Handler(w, http.StatusInternalServerError, err)
+		merrors.Handler(w, http.StatusInternalServerError, err)
 		return
 	}
 
 	if err := mhttp.WriteJsonResponse(w, ts.Response(), http.StatusOK); err != nil {
-		terrors.Handler(w, http.StatusInternalServerError, err)
+		merrors.Handler(w, http.StatusInternalServerError, err)
 		return
 	}
 }

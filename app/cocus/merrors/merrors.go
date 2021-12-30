@@ -1,4 +1,4 @@
-package terrors
+package merrors
 
 import (
 	"encoding/json"

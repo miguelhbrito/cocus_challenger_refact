@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/cocus_challenger_refact/app/cocus/merrors"
 	"github.com/cocus_challenger_refact/app/cocus/rate_limit"
-	"github.com/cocus_challenger_refact/app/cocus/terrors"
 	"github.com/cocus_challenger_refact/business/data/login"
 	"github.com/golang-jwt/jwt"
 )
@@ -30,7 +30,7 @@ func (m Middleware) Authorization(next http.Handler) http.Handler {
 		limiter := limiter.GetLimiter(r.RemoteAddr)
 
 		if !limiter.Allow() {
-			terrors.Handler(w, http.StatusTooManyRequests,
+			merrors.Handler(w, http.StatusTooManyRequests,
 				errors.New("too many requests from the same Ip address"))
 			return
 		}
@@ -47,7 +47,7 @@ func (m Middleware) Authorization(next http.Handler) http.Handler {
 			})
 			if err != nil {
 				m.Log.Printf("Error on get token from request, err: %v", err)
-				terrors.Handler(w, 500, err)
+				merrors.Handler(w, http.StatusInternalServerError, err)
 				return
 			}
 
@@ -58,7 +58,7 @@ func (m Middleware) Authorization(next http.Handler) http.Handler {
 				next.ServeHTTP(w, r)
 			} else {
 				m.Log.Printf("Error on decode token, err: %v", err)
-				terrors.Handler(w, 401, err)
+				merrors.Handler(w, http.StatusUnauthorized, err)
 				return
 			}
 

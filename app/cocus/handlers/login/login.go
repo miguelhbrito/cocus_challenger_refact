@@ -6,8 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/cocus_challenger_refact/app/cocus/merrors"
 	"github.com/cocus_challenger_refact/app/cocus/mhttp"
-	"github.com/cocus_challenger_refact/app/cocus/terrors"
 	core "github.com/cocus_challenger_refact/business/core/login"
 	"github.com/cocus_challenger_refact/business/data/login"
 )
@@ -25,7 +25,7 @@ func (h LoginHandlers) CreateUser(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		h.Log.Printf("Error to decode from json, err %s", err)
-		terrors.Handler(w, 500,
+		merrors.Handler(w, http.StatusInternalServerError,
 			fmt.Errorf("Error to decode from json, err:%s", err.Error()))
 		return
 	}
@@ -33,7 +33,7 @@ func (h LoginHandlers) CreateUser(w http.ResponseWriter, r *http.Request) {
 	err = req.Validate()
 	if err != nil {
 		h.Log.Printf("Error to validate fields from login request, err %s", err)
-		terrors.Handler(w, 400, err)
+		merrors.Handler(w, http.StatusBadRequest, err)
 		return
 	}
 
@@ -41,12 +41,12 @@ func (h LoginHandlers) CreateUser(w http.ResponseWriter, r *http.Request) {
 	err = h.LoginManager.CreateUser(login)
 	if err != nil {
 		h.Log.Printf("Error to create a new user, err %s", err)
-		terrors.Handler(w, 500, err)
+		merrors.Handler(w, http.StatusInternalServerError, err)
 		return
 	}
 
 	if err := mhttp.WriteJsonResponse(w, nil, http.StatusCreated); err != nil {
-		terrors.Handler(w, http.StatusCreated, err)
+		merrors.Handler(w, http.StatusCreated, err)
 		return
 	}
 
@@ -60,7 +60,7 @@ func (h LoginHandlers) Login(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
 		h.Log.Printf("Error to decode from json, err %s", err)
-		terrors.Handler(w, http.StatusInternalServerError,
+		merrors.Handler(w, http.StatusInternalServerError,
 			fmt.Errorf("Error to decode from json, err:%s", err.Error()))
 		return
 	}
@@ -68,7 +68,7 @@ func (h LoginHandlers) Login(w http.ResponseWriter, r *http.Request) {
 	err = req.Validate()
 	if err != nil {
 		h.Log.Printf("Error to validate fields from login, err %s", err)
-		terrors.Handler(w, http.StatusBadRequest, err)
+		merrors.Handler(w, http.StatusBadRequest, err)
 		return
 	}
 
@@ -76,12 +76,12 @@ func (h LoginHandlers) Login(w http.ResponseWriter, r *http.Request) {
 	token, err := h.LoginManager.Login(loginEntity)
 	if err != nil {
 		h.Log.Printf("Error to login into system, err %s", err)
-		terrors.Handler(w, http.StatusUnauthorized, err)
+		merrors.Handler(w, http.StatusUnauthorized, err)
 		return
 	}
 
 	if err := mhttp.WriteJsonResponse(w, token, http.StatusOK); err != nil {
-		terrors.Handler(w, http.StatusOK, err)
+		merrors.Handler(w, http.StatusOK, err)
 		return
 	}
 }
