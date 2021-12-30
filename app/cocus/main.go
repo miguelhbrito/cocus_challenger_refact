@@ -12,6 +12,7 @@ import (
 
 	"github.com/ardanlabs/conf"
 	"github.com/cocus_challenger_refact/app/cocus/handlers"
+	"github.com/cocus_challenger_refact/business/data/login"
 	"github.com/cocus_challenger_refact/platform/config"
 	db "github.com/cocus_challenger_refact/platform/db_connect"
 	"github.com/cocus_challenger_refact/platform/migrations"
@@ -38,6 +39,9 @@ func run() error {
 	if err != nil {
 		log.Printf("cannot load config:", err)
 	}
+
+	// Jwt primary key
+	login.JwtKey = []byte(config.PrimaryTokenKey)
 
 	var cfg struct {
 		Web struct {

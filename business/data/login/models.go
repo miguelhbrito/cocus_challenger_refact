@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	JwtKey                 = []byte("my_secret_key")
+	JwtKey                 = []byte("")
 	ErrUserOrPassIncorrect = errors.New("Username or Password is incorrect")
 	ErrPasswordHash        = errors.New("Error to generate password hash")
 )
